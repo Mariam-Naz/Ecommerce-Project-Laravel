@@ -17,7 +17,8 @@ use App\Http\Controllers\AdminController;
 // Route::view('/' , 'welcome');
 
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
-Route::match(['get', 'post'], '/login', [AdminController::class, 'login']);
+Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
+Route::match(['get', 'post'], '/admin/dashboard', [AdminController::class, 'dashboard']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

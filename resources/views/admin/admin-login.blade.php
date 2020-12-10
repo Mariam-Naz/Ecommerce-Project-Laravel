@@ -26,10 +26,16 @@
     <body>
         <!-- Content Wrapper -->
         <div class="login-wrapper">
+
             <div class="back-link">
                 <a href="index.html" class="btn btn-add">Back to Dashboard</a>
             </div>
             <div class="container-center">
+                @if(Session::has('error-message'))
+            <div class='alert alert-danger'>
+                  {{session('error-message')}}
+            </div>
+            @endif
             <div class="login-area">
                 <div class="panel panel-bd panel-custom">
                     <div class="panel-heading">
@@ -44,10 +50,12 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form action="http://thememinister.com/crm/index.html" id="loginForm" novalidate>
+
+                        <form action={{url('admin')}} id="loginForm" novalidate method='post'>
+                            @csrf
                             <div class="form-group">
                                 <label class="control-label" for="username">Username</label>
-                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="username" id="username" class="form-control">
+                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="email" id="username" class="form-control">
                                 <span class="help-block small">Your unique username to app</span>
                             </div>
                             <div class="form-group">
