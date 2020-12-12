@@ -36,6 +36,11 @@
                   {{session('error-message')}}
             </div>
             @endif
+            @if(Session::has('session-end-message'))
+            <div class='alert alert-success'>
+                  {{session('session-end-message')}}
+            </div>
+            @endif
             <div class="login-area">
                 <div class="panel panel-bd panel-custom">
                     <div class="panel-heading">

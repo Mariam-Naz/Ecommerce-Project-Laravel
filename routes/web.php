@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,8 +19,13 @@ use App\Http\Controllers\AdminController;
 
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
 Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
-Route::match(['get', 'post'], '/admin/dashboard', [AdminController::class, 'dashboard']);
+Route::get('/logout' , [AdminController::class,'logout']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::group(['middleware'=>['auth']], function(){
+    Route::match(['get', 'post'], '/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::match(['get', 'post'], '/admin/add-product', [ProductsController::class, 'addProduct']);
+});

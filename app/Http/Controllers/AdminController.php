@@ -22,4 +22,9 @@ class AdminController extends Controller
     public function dashboard(){
         return view('admin.dashboard');
     }
+
+    public function logout(Request $req){
+      $req->session()->flush();
+      return redirect('admin')->with('session-end-message' , "You have been successfully logged out!");
+    }
 }
