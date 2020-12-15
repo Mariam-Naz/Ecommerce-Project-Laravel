@@ -110,7 +110,7 @@
 
         <script>
             $(document).ready( function () {
-               $('#myTable').DataTable( {
+               $('#table_id').DataTable( {
     responsive: true
 } );
 

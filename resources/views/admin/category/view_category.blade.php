@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title' , 'View Product')
+@section('title' , 'View Category')
 @section('content')
 
          <!-- =============================================== -->
@@ -11,8 +11,8 @@
                   <i class="fa fa-users"></i>
                </div>
                <div class="header-title">
-                  <h1>Product</h1>
-                  <small>Product List</small>
+                  <h1>Category</h1>
+                  <small>Category List</small>
                </div>
             </section>
 
@@ -20,16 +20,16 @@
             <section class="content">
                <div class="row">
                   <div class="col-sm-12">
-                      @if(Session::has('update-message'))
+                      @if(Session::has('category-update-message'))
             <div class="alert alert-success">
-                {{session('update-message')}}
+                {{session('category-update-message')}}
             </div>
             @endif
                      <div class="panel panel-bd lobidrag">
                         <div class="panel-heading">
                            <div class="btn-group" id="buttonexport">
-                              <a href={{url('admin/view-products')}}>
-                                 <h4>View Products</h4>
+                              <a href={{url('admin/view-categories')}}>
+                                 <h4>View categories</h4>
                               </a>
                            </div>
                         </div>
@@ -37,7 +37,7 @@
                         <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
                            <div class="btn-group">
                               <div class="buttonexport" id="buttonlist">
-                                 <a class="btn btn-add" href={{url('admin/add-product')}}> <i class="fa fa-plus"></i> Add Product
+                                 <a class="btn btn-add" href={{url('admin/add-category')}}> <i class="fa fa-plus"></i> Add Category
                                  </a>
                               </div>
                               <button class="btn btn-exp btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
@@ -98,33 +98,27 @@
                               <table id="table_id" class="table table-bordered table-striped table-hover">
                                  <thead>
                                     <tr class="info">
-                                       <th>Product Name</th>
-                                       <th>Category</th>
-                                       <th>code</th>
-                                       <th>Color</th>
-                                       <th>Image</th>
+                                       <th>id</th>
+                                       <th>Category Name</th>
+                                       <th>Url</th>
                                        <th>Description</th>
-                                       <th>Price</th>
-                                       <th>Created at</th>
+                                       <th>Created_at</th>
                                        <th>Status</th>
                                        <th>Action</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                     @foreach ($products as $product)
+                                     @foreach ($categories as $category)
                                     <tr>
-                                       <td>{{$product->name}}</td>
-                                        <td>{{$product->category_id}}</td>
-                                       <td>{{$product->code}}</td>
-                                       <td>{{$product->color}}</td>
-                                       <td><img src="{{asset('uploads/product/'.$product->image)}}"alt={{$product->image}} width="100" height="100"> </td>
-                                       <td>{{$product->description}}</td>
-                                       <td>{{$product->price}}</td>
-                                       <td>{{$product->created_at}}</td>
+                                       <td>{{$category->id}}</td>
+                                        <td>{{$category->name}}</td>
+                                       <td>{{$category->url}}</td>
+                                       <td>{{$category->description}}</td>
+                                       <td>{{$category->created_at}}</td>
                                        <td><span class="label-custom label label-default">Active</span></td>
                                        <td>
-                                          <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#{{$product->id}}"><i class="fa fa-pencil"></i></a>
-                                          <a href="{{url('/admin/delete-product/'.$product->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> </a>
+                                          <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-categories/'.$category->id)}}" data-target="#{{$category->id}}"><i class="fa fa-pencil"></i></a>
+                                          <a href="{{url('/admin/delete-category/'.$category->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> </a>
                                        </td>
                                     </tr>
                                      @endforeach
@@ -136,59 +130,32 @@
                   </div>
                </div>
                <!-- customer Modal1 -->
- @foreach ($products as $product)
-               <div class="modal fade" id={{$product->id}} tabindex="-1" role="dialog" aria-hidden="true">
+ @foreach ($categories as $category)
+               <div class="modal fade" id={{$category->id}} tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header modal-header-primary">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                           <h3><i class="fa fa-user m-r-5"></i> Update Product</h3>
+                           <h3><i class="fa fa-user m-r-5"></i> Update Category</h3>
                         </div>
                         <div class="modal-body">
                            <div class="row">
                               <div class="col-md-12">
-                                 <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/view-product/'.$product->id)}}> @csrf
+                                 <form class="form-horizontal" method='post' action={{url('/admin/view-category/'.$category->id)}}> @csrf
                                     <fieldset>
-
                                        <!-- Text input-->
-                                       <div class="col-md-6 form-group">
-                                          <label class="control-label">Product Name</label>
-                                          <input type="text" value="{{$product->name}}" placeholder="Product Name" class="form-control" name='product_name'>
+                                       <div class="col-md-4 form-group">
+                                          <label class="control-label">Category Name</label>
+                                          <input type="text" value="{{$category->name}}" placeholder="Category Name" class="form-control" name='category_name'>
                                        </div>
-                                         <div class='form-group col-md-6'>
-                                        <label class="control-label">Category</label>
-                                        <select name='category_id' class="form-control">
-                                               <option selected value='{{$product->category_id}}'> <?php echo $product->category_name ?> </option>
-                                               @foreach($categories as $cat)
-                                               <option value='{{$cat->id}}'><?php echo $cat->category_name ?></option>
-                                               @endforeach
-                                            </select>
-                                        </div>
-                                       <!-- Text input-->
-                                       <div class="col-md-6 form-group">
-                                          <label class="control-label">Code</label>
-                                          <input type="text" placeholder="Code" class="form-control" name='product_code' value="{{$product->code}}">
+                                         <div class='form-group col-md-8'>
+                                        <label>Url</label>
+                                        <input type="url" value="{{$category->url}}" placeholder="Url" class="form-control" name='category_url'>
                                        </div>
                                        <!-- Text input-->
-                                       <div class="col-md-6 form-group">
-                                          <label class="control-label">Color</label>
-                                          <input type="color" class="form-control" name='product_color' value="{{$product->color}}">
-                                       </div>
-                                       <div class="col-md-6 form-group">
-                                          <label class="control-label">Price</label>
-                                          <input type="number" placeholder="Price" class="form-control" value="{{$product->price}}" name='product_price'>
-                                       </div>
-                                         <div class="form-group col-md-6">
-                                              @if(!empty($product->image))
-                                          <img src="{{asset('uploads/product/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
-                                          @endif
-                                 <label>Picture upload</label>
-                                 <input type="file" name="image">
-                                  <input type="hidden" name="current_image" value="{{$product->image}}">
-                              </div>
-                               <div class="col-md-12 form-group">
-                                          <label class="control-label">Description</label><br>
-                                          <textarea name="product_description" rows="5" cols='37'>{{$product->description}}</textarea>
+                                       <div class="col-md-12 form-group">
+                                          <label class="control-label">Description</label>
+                                          <textarea placeholder="Description" class="form-control" name='category_description' value="{{$category->description}}" rows='5'></textarea>
                                        </div>
                                        <div class="col-md-12 form-group user-form-group">
                                           <div class="pull-right">

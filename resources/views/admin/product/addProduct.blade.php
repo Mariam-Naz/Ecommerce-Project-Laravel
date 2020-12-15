@@ -37,6 +37,12 @@
                                  <label>Product Name</label>
                                  <input type="text" class="form-control" placeholder="Enter Product Name" name='product_name' required>
                               </div>
+                              <div class='form-group'>
+                              <label>Category</label>
+                              <select name='category_id' class="form-control">
+                                    <?php echo $category_dropdown ?>
+                                 </select>
+                                </div>
                               <div class="form-group">
                                  <label>Product Code</label>
                                  <input type="text" class="form-control" placeholder="Enter Product Code" name='product_code' required>

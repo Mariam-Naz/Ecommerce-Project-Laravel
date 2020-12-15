@@ -38,15 +38,6 @@
                                  <input type="text" class="form-control" placeholder="Enter Category Name" name='category_name' required>
                               </div>
                               <div class="form-group">
-                                 <label>Parent Category</label>
-                                 <select name='parent_id' class="form-control">
-                                     <option value="0">Parent Category</option>
-                                     @foreach($levels as $val)
-                                     <option value="{{$val->id}}">{{$val->name}}</option>
-                                     @endforeach
-                                 </select>
-                              </div>
-                              <div class="form-group">
                                  <label>Url</label>
                                  <input type="url" class="form-control" placeholder="Enter Category Url" name='category_url' required>
                               </div>
