@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title' , 'Add Product')
+@section('title' , 'Add Category')
 @section('content')
          <!-- =============================================== -->
          <!-- Content Wrapper. Contains page content -->
@@ -10,8 +10,8 @@
                   <i class="fa fa-users"></i>
                </div>
                <div class="header-title">
-                  <h1>Add Product</h1>
-                  <small>Product list</small>
+                  <h1>Add Category</h1>
+                  <small>Category list</small>
                </div>
             </section>
             <!-- Main content -->
@@ -19,46 +19,43 @@
                <div class="row">
                   <!-- Form controls -->
                   <div class="col-sm-12">
-                       @if(Session::has('success-message'))
+                       @if(Session::has('category-added-message'))
                                 <div class='alert alert-success'>
-                                {{session('success-message')}}
+                                {{session('category-added-message')}}
                             </div>
                             @endif
                      <div class="panel panel-bd lobidrag">
                         <div class="panel-heading">
                            <div class="btn-group" id="buttonlist">
-                              <a class="btn btn-add " href="{{url('/admin/view-products')}}">
-                              <i class="fa fa-eye"></i> View Products</a>
+                              <a class="btn btn-add " href="{{url('/admin/view-Categories')}}">
+                              <i class="fa fa-eye"></i> View Categories</a>
                            </div>
                         </div>
                         <div class="panel-body">
-                           <form class="col-sm-6" enctype="multipart/form-data" action={{url('/admin/add-product')}} method="post"> @csrf
+                           <form class="col-sm-6" action={{url('/admin/add-category')}} method="post"> @csrf
                               <div class="form-group">
-                                 <label>Product Name</label>
-                                 <input type="text" class="form-control" placeholder="Enter Product Name" name='product_name' required>
+                                 <label>Category Name</label>
+                                 <input type="text" class="form-control" placeholder="Enter Category Name" name='category_name' required>
                               </div>
                               <div class="form-group">
-                                 <label>Product Code</label>
-                                 <input type="text" class="form-control" placeholder="Enter Product Code" name='product_code' required>
+                                 <label>Parent Category</label>
+                                 <select name='parent_id' class="form-control">
+                                     <option value="0">Parent Category</option>
+                                     @foreach($levels as $val)
+                                     <option value="{{$val->id}}">{{$val->name}}</option>
+                                     @endforeach
+                                 </select>
                               </div>
                               <div class="form-group">
-                                 <label>Product Color</label>
-                                 <input type="color"  placeholder="Enter Product Color" name='product_color' required>
+                                 <label>Url</label>
+                                 <input type="url" class="form-control" placeholder="Enter Category Url" name='category_url' required>
                               </div>
                               <div class="form-group">
-                                 <label>Product Description</label>
-                                 <textarea class="form-control" rows='5' placeholder="Enter Product Description" name='product_description' required></textarea>
-                              </div>
-                              <div class="form-group">
-                                 <label>Product Price</label>
-                                 <input type="number" class="form-control" placeholder="Enter Product Price" name='product_price' required>
-                              </div>
-                              <div class="form-group">
-                                 <label>Picture upload</label>
-                                 <input type="file" name="image">
+                                 <label>Description</label>
+                                 <textarea class="form-control" rows='5' placeholder="Enter Category Description" name='category_description' required></textarea>
                               </div>
                               <div class="reset-button">
-                                    <input type='submit' class="btn btn-success" value='Add Product'>
+                                    <input type='submit' class="btn btn-success" value='Add Category'>
                               </div>
                            </form>
                         </div>

@@ -6,9 +6,9 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>CRM Admin Panel</title>
+      <title>@yield('title') - Maryaaz</title>
       <!-- Favicon and touch icons -->
-      <link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+      <link rel="shortcut icon" href="{{asset('admin_assets/dist/img/ico/favicon.png')}}" type="image/x-icon">
       <!-- Start Global Mandatory Style
          =====================================================================-->
       <!-- jquery-ui css -->
@@ -32,6 +32,7 @@
       <!-- Start page Label Plugins
          =====================================================================-->
       <!-- Emojionearea -->
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
       <link href={{asset('admin_assets/plugins/emojionearea/emojionearea.min.css')}} rel="stylesheet" type="text/css"/>
       <!-- Monthly css -->
       <link href={{asset('admin_assets/plugins/monthly/monthly.css')}} rel="stylesheet" type="text/css"/>
@@ -54,10 +55,10 @@
       </div>
       <!-- Site wrapper -->
       <div class="wrapper">
-    @include('admin.layouts.header');
-     @include('admin.layouts.sidebar');
-    @yield('content');
-    @include('admin.layouts.footer');
+    @include('admin.layouts.header')
+     @include('admin.layouts.sidebar')
+    @yield('content')
+    @include('admin.layouts.footer')
 
       </div>
         <!-- /.wrapper -->
@@ -83,6 +84,17 @@
          =====================================================================-->
       <!-- ChartJs JavaScript -->
       <script src={{asset('admin_assets/plugins/chartJs/Chart.min.js')}} type="text/javascript"></script>
+
+      <! =================================================================-->
+      <!---------------- export file plugin ---------------->
+       <script src={{asset('admin_assets/plugins/table-export/tableExport.js')}} type="text/javascript"></script>
+       <script src={{asset('admin_assets/plugins/table-export/jquery.base64.js')}} type="text/javascript"></script>
+       <script src={{asset('admin_assets/plugins/table-export/sprintf.js')}} type="text/javascript"></script>
+         <script src="{{asset('admin_assets/plugins/table-export/jspdf.js')}}" type="text/javascript"></script>
+         <script src="{{asset('admin_assets/plugins/table-export/base64.js')}}" type="text/javascript"></script>
+
+         <script src={{asset('admin_assets/plugins/table-export/html2canvas.js')}} type="text/javascript"></script>
+
       <!-- Counter js -->
       <script src={{asset('admin_assets/plugins/counterup/waypoints.js')}} type="text/javascript"></script>
       <script src={{asset('admin_assets/plugins/counterup/jquery.counterup.min.js')}} type="text/javascript"></script>
@@ -94,8 +106,20 @@
          =====================================================================-->
       <!-- Dashboard js -->
       <script src={{asset('admin_assets/dist/js/dashboard.js')}} type="text/javascript"></script>
-      <!-- End Theme label Script
-         =====================================================================-->
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready( function () {
+               $('#myTable').DataTable( {
+    responsive: true
+} );
+
+            } );
+
+        </script>
+
+
+        <!-- =====================================================================-->
       <script>
          function dash() {
          // single bar chart
@@ -176,6 +200,7 @@
          }
          dash();
       </script>
+@include('sweetalert::alert')
    </body>
 
 <!-- Mirrored from thememinister.com/crm/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Jun 2019 11:08:11 GMT -->

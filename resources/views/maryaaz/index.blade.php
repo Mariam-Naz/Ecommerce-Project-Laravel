@@ -1,5 +1,5 @@
-@extends('maryaaz.layouts.master');
-@section('content');
+@extends('maryaaz.layouts.master')
+@section('content')
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
@@ -364,4 +364,4 @@
         </div>
     </div>
     <!-- End Instagram Feed  -->
-@endsection;
+@endsection

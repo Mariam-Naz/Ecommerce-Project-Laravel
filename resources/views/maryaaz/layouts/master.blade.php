@@ -38,9 +38,9 @@
 </head>
 
 <body>
-@include('maryaaz.layouts.header');
-@yield('content');
-@include('maryaaz.layouts.footer');
+@include('maryaaz.layouts.header')
+@yield('content')
+@include('maryaaz.layouts.footer')
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
