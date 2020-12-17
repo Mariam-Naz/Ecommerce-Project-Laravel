@@ -27,7 +27,7 @@
                      <div class="panel panel-bd lobidrag">
                         <div class="panel-heading">
                            <div class="btn-group" id="buttonlist">
-                              <a class="btn btn-add " href="{{url('/admin/view-Categories')}}">
+                              <a class="btn btn-add " href="{{url('/admin/view-categories')}}">
                               <i class="fa fa-eye"></i> View Categories</a>
                            </div>
                         </div>

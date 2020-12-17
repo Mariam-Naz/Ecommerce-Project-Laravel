@@ -38,7 +38,7 @@ class ProductsController extends Controller
             }
         }
             $product->save();
-            return redirect('/admin/view-products')->with('success-message' , "Product has been successfully added!!");
+            return redirect('/admin/add-product')->with('success-message' , "Product has been successfully added!!");
 
         }
         //category dropdown menu code
@@ -52,15 +52,13 @@ class ProductsController extends Controller
 
     public function viewProducts(){
         $products = DB::table('products')->join("categories", "categories.id", "=", "products.category_id")->select('products.*', 'categories.name as category_name')->get();
-        $categories =  DB::table('categories')->join('products', 'categories.id', 'products.category_id')->select('categories.*', 'categories.name as category_name')->whereNotIn('categories.id' , ['products.category_id'])->get();
+        $categories =  Category::get();
         return view('admin.product.viewProducts' , ['categories' =>$categories])->with(compact('products'));
     }
 
     public function editProduct(Request $req, $id=null){
         if ($req->isMethod('post')) {
             $data = $req->all();
-
-
             if (empty($data['product_description'])) {
                $data['product_description']='';
             }
@@ -88,5 +86,10 @@ class ProductsController extends Controller
         alert()->success('Deleted', 'Product  been deleted successfully!!');
 
         return redirect()->back();
+    }
+
+    public function updateStatus(Request $req , $id=null){
+        $data = $req->all();
+        Products::where(['id'=>$data['id']])->update(['status'=>$data['status']]);
     }
 }

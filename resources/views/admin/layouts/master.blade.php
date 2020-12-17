@@ -7,6 +7,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>@yield('title') - Maryaaz</title>
+       <meta name='csrf-token' content="{{csrf_token()}}">
       <!-- Favicon and touch icons -->
       <link rel="shortcut icon" href="{{asset('admin_assets/dist/img/ico/favicon.png')}}" type="image/x-icon">
       <!-- Start Global Mandatory Style
@@ -48,7 +49,7 @@
          =====================================================================-->
 </head>
 
-  <body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini">
          <!--preloader-->
       <div id="preloader">
          <div id="status"></div>
@@ -112,7 +113,85 @@
             $(document).ready( function () {
                $('#table_id').DataTable( {
     responsive: true
-} );
+    } );
+
+    $('.product-status').change(function(){
+        var id = $(this).attr('rel');
+        if($(this).prop("checked") == true){
+            $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-product',
+                data: {status:'1' ,id:id},
+                success:function(resp){
+                    $('#message_success').show();
+                    setTimeout(function(){
+                        $('#message_success').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }else{
+             $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-product',
+                data: {status:'0' ,id:id},
+                success:function(resp){
+                    $('#message_error').show();
+                    setTimeout(function(){
+                        $('#message_error').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }
+    });
+
+      $('.category-status').change(function(){
+        var id = $(this).attr('rel');
+        if($(this).prop("checked") == true){
+            $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-category',
+                data: {status:'1' ,id:id},
+                success:function(resp){
+                    $('#message_success').show();
+                    setTimeout(function(){
+                        $('#message_success').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }else{
+             $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-category',
+                data: {status:'0' ,id:id},
+                success:function(resp){
+                    $('#message_error').show();
+                    setTimeout(function(){
+                        $('#message_error').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }
+    });
 
             } );
 
@@ -200,8 +279,10 @@
          }
          dash();
       </script>
-@include('sweetalert::alert')
-   </body>
+      <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap2-toggle.css">
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js'></script>
+
+</body>
 
 <!-- Mirrored from thememinister.com/crm/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Jun 2019 11:08:11 GMT -->
 </html>

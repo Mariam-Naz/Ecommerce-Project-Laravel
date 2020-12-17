@@ -33,5 +33,16 @@ class CategoryController extends Controller
         }
         return view('admin.category.add_category');
     }
-    
+
+    public function updateStatus(Request $req, $id = null)
+    {
+        $data = $req->all();
+        Category::where(['id' => $data['id']])->update(['status' => $data['status']]);
+    }
+
+    public function deleteCategory($id=null){
+        Category::where(['id' => $id])->delete();
+        return redirect()->back()->
+        with('deleted-message', 'Category has been deleted successfully!!');
+    }
 }

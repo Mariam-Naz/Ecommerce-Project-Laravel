@@ -17,7 +17,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+        <section class="content">
                <div class="row">
                   <div class="col-sm-12">
                       @if(Session::has('category-update-message'))
@@ -25,6 +25,14 @@
                 {{session('category-update-message')}}
             </div>
             @endif
+                   @if(Session::has('deleted-message'))
+            <div class="alert alert-danger">
+                {{session('deleted-message')}}
+            </div>
+            @endif
+             <div id='message_error' style='display:none;' class='alert alert-danger'>
+                Status Disabled</div>
+              <div id='message_success' style='display:none;' class='alert alert-success'>Status Enabled</div>
                      <div class="panel panel-bd lobidrag">
                         <div class="panel-heading">
                            <div class="btn-group" id="buttonexport">
@@ -93,7 +101,8 @@
                                  </li>
                               </ul>
                            </div>
-                           <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
+
+                           <!-- TABLE -->
                            <div class="table-responsive">
                               <table id="table_id" class="table table-bordered table-striped table-hover">
                                  <thead>
@@ -115,10 +124,11 @@
                                        <td>{{$category->url}}</td>
                                        <td>{{$category->description}}</td>
                                        <td>{{$category->created_at}}</td>
-                                       <td><span class="label-custom label label-default">Active</span></td>
+                                       <td><input type='checkbox' rel='{{$category->id}}' class=' category-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($category->status == 1) checked @endif ></td>
+                                       <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
                                        <td>
                                           <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-categories/'.$category->id)}}" data-target="#{{$category->id}}"><i class="fa fa-pencil"></i></a>
-                                          <a href="{{url('/admin/delete-category/'.$category->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> </a>
+                                          <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{$category->name}}"><i class="fa fa-trash-o"></i> </a>
                                        </td>
                                     </tr>
                                      @endforeach
@@ -155,7 +165,7 @@
                                        <!-- Text input-->
                                        <div class="col-md-12 form-group">
                                           <label class="control-label">Description</label>
-                                          <textarea placeholder="Description" class="form-control" name='category_description' value="{{$category->description}}" rows='5'></textarea>
+                                          <textarea placeholder="Description" class="form-control" name='category_description' value="{{$category->description}}" rows='5'>{{$category->description}}</textarea>
                                        </div>
                                        <div class="col-md-12 form-group user-form-group">
                                           <div class="pull-right">
@@ -178,13 +188,14 @@
 @endforeach
                <!-- /.modal -->
                <!-- Modal -->
-               <!-- Customer Modal2 -->
-               <div class="modal fade" id="customer2" tabindex="-1" role="dialog" aria-hidden="true">
+               <!-- Category Delete Model -->
+            @foreach ($categories as $category)
+               <div class="modal fade" id="{{$category->name}}" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header modal-header-primary">
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                           <h3><i class="fa fa-user m-r-5"></i> Delete Customer</h3>
+                           <h3><i class="fa fa-user m-r-5"></i> Delete Category</h3>
                         </div>
                         <div class="modal-body">
                            <div class="row">
@@ -192,10 +203,10 @@
                                  <form class="form-horizontal">
                                     <fieldset>
                                        <div class="col-md-12 form-group user-form-group">
-                                          <label class="control-label">Delete Customer</label>
+                                          <label class="control-label">Delete Category</label>
                                           <div class="pull-right">
-                                             <button type="button" class="btn btn-danger btn-sm">NO</button>
-                                             <button type="submit" class="btn btn-add btn-sm">YES</button>
+                                             <a type="submit" href='{{url('/admin/delete-category/'.$category->id)}}' class="btn btn-danger btn-sm">YES</a>
+                                             <button type="button" class="btn btn-add btn-sm" data-dismiss="modal">NO</button>
                                           </div>
                                        </div>
                                     </fieldset>
@@ -211,6 +222,7 @@
                   </div>
                   <!-- /.modal-dialog -->
                </div>
+            @endforeach
                <!-- /.modal -->
             </section>
             <!-- /.content -->
