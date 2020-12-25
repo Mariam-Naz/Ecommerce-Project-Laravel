@@ -36,6 +36,18 @@
                         <li><a href={{url('admin/view-products')}}>View Products</a></li>
                      </ul>
                   </li>
+                  <li class="treeview">
+                     <a href="#">
+                     <i class="fa fa-image"></i><span>Banners</span>
+                     <span class="pull-right-container">
+                     <i class="fa fa-angle-left pull-right"></i>
+                     </span>
+                     </a>
+                     <ul class="treeview-menu">
+                        <li><a href={{url('admin/add-banner')}}>Add Banner</a></li>
+                        <li><a href={{url('admin/view-banners')}}>View Banner</a></li>
+                     </ul>
+                  </li>
                </ul>
             </div>
             <!-- /.sidebar -->

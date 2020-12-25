@@ -107,13 +107,11 @@
          =====================================================================-->
       <!-- Dashboard js -->
       <script src={{asset('admin_assets/dist/js/dashboard.js')}} type="text/javascript"></script>
-      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
         <script>
             $(document).ready( function () {
-               $('#table_id').DataTable( {
-    responsive: true
-    } );
+               $('#table_id').DataTable();
 
     $('.product-status').change(function(){
         var id = $(this).attr('rel');
@@ -180,6 +178,45 @@
                 },
                 type: 'post',
                 url: '/admin/update-category',
+                data: {status:'0' ,id:id},
+                success:function(resp){
+                    $('#message_error').show();
+                    setTimeout(function(){
+                        $('#message_error').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }
+    });
+
+     $('.banner-status').change(function(){
+        var id = $(this).attr('rel');
+        if($(this).prop("checked") == true){
+            $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-banner',
+                data: {status:'1' ,id:id},
+                success:function(resp){
+                    $('#message_success').show();
+                    setTimeout(function(){
+                        $('#message_success').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }else{
+             $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-product',
                 data: {status:'0' ,id:id},
                 success:function(resp){
                     $('#message_error').show();

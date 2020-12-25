@@ -119,7 +119,7 @@
                         <td>{{$product->category_id}}</td>
                         <td>{{$product->code}}</td>
                         <td>{{$product->color}}</td>
-                        <td><img src="{{asset('uploads/product/'.$product->image)}}"alt={{$product->image}} width="100" height="100"> </td>
+                        <td><img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="100" height="100"> </td>
                         <td>{{$product->description}}</td>
                         <td>{{$product->price}}</td>
                         <td>{{$product->created_at}}</td>
@@ -185,7 +185,7 @@
                                             </div>
                                                 <div class="form-group col-md-6">
                                                     @if(!empty($product->image))
-                                                <img src="{{asset('uploads/product/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
+                                                <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
                                                 @endif
                                         <label>Picture upload</label>
                                         <input type="file" name="image">

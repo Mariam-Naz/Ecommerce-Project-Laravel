@@ -5,6 +5,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BannerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,4 +43,13 @@ Route::group(['middleware'=>['auth']], function(){
     Route::match(['get', 'post'], '/admin/view-product/{id}', [ProductsController::class, 'editProduct']);
     Route::match(['get', 'post'], '/admin/delete-product/{id}', [ProductsController::class, 'deleteProduct']);
     Route::match(['get', 'post'], '/admin/update-product', [ProductsController::class, 'updateStatus']);
+
+    //Banner Routes
+    Route::match(['get', 'post'], '/admin/add-banner', [BannerController::class, 'addBanner']);
+    Route::match(['get', 'post'], '/admin/view-banners', [BannerController::class, 'viewBanners']);
+    Route::match(['get', 'post'], '/admin/view-banners/{id}', [BannerController::class, 'editBanner']);
+    Route::match(['get', 'post'], '/admin/delete-product/{id}', [ProductsController::class, 'deleteProduct']);
+
+    Route::match(['get', 'post'], '/admin/update-banner', [BannerController::class, 'updateStatus']);
+
 });

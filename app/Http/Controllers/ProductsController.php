@@ -32,7 +32,7 @@ class ProductsController extends Controller
                 if($imp_tmp->isValid()){
                 $extension = $imp_tmp->getClientOriginalExtension();
                 $fileName = rand(111,99999). '.' .$extension;
-                $imgPath = 'uploads/product/'.$fileName;
+                $imgPath = 'uploads/products/'.$fileName;
                 Image::make($imp_tmp)->resize(500,500)->save($imgPath);
                 $product->image = $fileName;
             }
@@ -67,7 +67,7 @@ class ProductsController extends Controller
                 if ($imp_tmp->isValid()) {
                     $extension = $imp_tmp->getClientOriginalExtension();
                     $fileName = rand(111, 99999) . '.' . $extension;
-                    $imgPath = 'uploads/product/' . $fileName;
+                    $imgPath = 'uploads/products/' . $fileName;
                     Image::make($imp_tmp)->resize(500, 500)->save($imgPath);
                 }
             }else{
