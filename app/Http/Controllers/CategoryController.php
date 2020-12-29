@@ -12,12 +12,14 @@ class CategoryController extends Controller
             $data = $req->all();
             $category = new Category();
             $category->name = $data['category_name'];
+            $category->parentId = $data['parent_id'];
             $category->url = $data['category_url'];
             $category->description = $data['category_description'];
             $category->save();
             return redirect('/admin/add-category')->with('category-added-message','Category has been added successfully!!');
         }
-        return view('admin.category.add_category');
+        $levels = Category::where(['parentId' => 0])->get();
+        return view('admin.category.add_category')->with(compact('levels'));
     }
 
     public function viewCategories(){

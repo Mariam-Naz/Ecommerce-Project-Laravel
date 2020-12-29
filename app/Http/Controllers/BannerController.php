@@ -64,6 +64,12 @@ class BannerController extends Controller
         return view('admin.banners.view-banner');
     }
 
+    public function deleteBanner($id = null)
+    {
+        Banner::where(['id' => $id])->delete();
+        return redirect()->back()->with('banner-deleted-message', 'Banner has been deleted successfully!!');
+    }
+
     public function updateStatus(Request $req, $id = null)
     {
         $data = $req->all();

@@ -216,7 +216,7 @@
                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                 },
                 type: 'post',
-                url: '/admin/update-product',
+                url: '/admin/update-banner',
                 data: {status:'0' ,id:id},
                 success:function(resp){
                     $('#message_error').show();

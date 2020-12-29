@@ -134,7 +134,7 @@
                                        <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
                                        <td>
                                           <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/banner/'.$banner->id)}}" data-target="#{{$banner->id}}"><i class="fa fa-pencil"></i></a>
-                                          <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#{{$banner->name}}"><i class="fa fa-trash-o"></i> </a>
+                                          <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
                                        </td>
                                     </tr>
                                      @endforeach
@@ -157,7 +157,7 @@
                         <div class="modal-body">
                            <div class="row">
                               <div class="col-md-12">
-                                 <form class="form-horizontal" method='post' action={{url('/admin/view-banners/'.$banner->id)}}> @csrf
+                                 <form class="form-horizontal" method='post' enctype="multipart/form-data"  action={{url('/admin/view-banners/'.$banner->id)}}> @csrf
                                     <fieldset>
                                        <!-- Text input-->
                                        <div class="col-md-4 form-group">
@@ -213,38 +213,38 @@
                <!-- Modal -->
                <!-- banner Delete Model -->
             @foreach ($banners as $banner)
-               <div class="modal fade" id="{{$banner->name}}" tabindex="-1" role="dialog" aria-hidden="true">
-                  <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header modal-header-primary">
-                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                           <h3><i class="fa fa-user m-r-5"></i> Delete Banner</h3>
+               <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header modal-header-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3><i class="fa fa-user m-r-5"></i> Delete Banner</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-horizontal">
+                                <fieldset>
+                                    <div class="col-md-12 form-group user-form-group">
+                                        <label class="control-label">Delete Banner</label>
+                                        <div class="pull-right">
+                                            <a type="submit" href='{{url('/admin/delete-banner/'.$banner->id)}}' class="btn btn-danger btn-sm">YES</a>
+                                            <button type="button" class="btn btn-add btn-sm" data-dismiss="modal">NO</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                </form>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                           <div class="row">
-                              <div class="col-md-12">
-                                 <form class="form-horizontal">
-                                    <fieldset>
-                                       <div class="col-md-12 form-group user-form-group">
-                                          <label class="control-label">Delete Banner</label>
-                                          <div class="pull-right">
-                                             <a type="submit" href='{{url('/admin/delete-banner/'.$banner->id)}}' class="btn btn-danger btn-sm">YES</a>
-                                             <button type="button" class="btn btn-add btn-sm" data-dismiss="modal">NO</button>
-                                          </div>
-                                       </div>
-                                    </fieldset>
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-                        </div>
-                     </div>
-                     <!-- /.modal-content -->
-                  </div>
-                  <!-- /.modal-dialog -->
-               </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
             @endforeach
                <!-- /.modal -->
             </section>

@@ -25,6 +25,11 @@
             {{session('update-message')}}
         </div>
         @endif
+        @if(Session::has('product-deleted-message'))
+            <div class="alert alert-danger">
+                {{session('product-deleted-message')}}
+            </div>
+            @endif
         <div id='message_error' style='display:none;' class='alert alert-danger'>
         Status Disabled</div>
         <div id='message_success' style='display:none;' class='alert alert-success'>Status Enabled</div>
@@ -116,7 +121,11 @@
                         @foreach ($products as $product)
                     <tr>
                         <td>{{$product->name}}</td>
-                        <td>{{$product->category_id}}</td>
+                        @foreach ($categories as $cat)
+                        @if($cat->id == $product->parent_cat)
+                            <td>{{$cat->name}}, {{$product->category_name}}</td>
+                            @endif
+                        @endforeach
                         <td>{{$product->code}}</td>
                         <td>{{$product->color}}</td>
                         <td><img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="100" height="100"> </td>
@@ -162,11 +171,8 @@
                                             <label class="control-label">Category</label>
                                             <select name='category_id' class="form-control">
                                                     <option selected value='{{$product->category_id}}'> <?php echo $product->category_name ?> </option>
-                                                    @foreach($categories as $cat)
-                                                    @if($cat->id != $product->category_id)
-                                                    <option value='{{$cat->id}}'>{{ $cat->name }}</option>
-                                                    @endif
-                                                    @endforeach
+                                                     <?php echo $category_dropdown ?>
+
                                                 </select>
                                             </div>
                                             <!-- Text input-->
