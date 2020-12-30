@@ -20,6 +20,7 @@ use App\Http\Controllers\BannerController;
 // Route::view('/' , 'welcome');
 
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
+Route::match(['get','post'],'/category/{id}' , [IndexController::class , 'category']);
 Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
 Route::get('/logout' , [AdminController::class,'logout']);
 

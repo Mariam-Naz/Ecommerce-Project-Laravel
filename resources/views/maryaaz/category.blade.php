@@ -1,29 +1,5 @@
 @extends('maryaaz.layouts.master')
 @section('content')
-    <!-- Start Slider -->
-    <div id="slides-shop" class="cover-slides">
-        <ul class="slides-container">
-            @foreach ($banners as $banner)
-            <li class="{{$banner->textStyle}}">
-                <img src="uploads/banners/{{$banner->image}}" alt="{{$banner->image}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>{!!$banner->name!!}</strong></h1>
-                            <p class="m-b-40">{!!$banner->content!!}</p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            @endforeach
-        </ul>
-        <div class="slides-navigation">
-            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-        </div>
-    </div>
-    <!-- End Slider -->
 
      <!-- Start Shop Page  -->
     <div class="shop-box-inner">
@@ -169,6 +145,7 @@
                             </div>
                         </div>
 
+                        <!--******PRODUCT SECTION*********** -->
                         <div class="row product-categorie-box">
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
