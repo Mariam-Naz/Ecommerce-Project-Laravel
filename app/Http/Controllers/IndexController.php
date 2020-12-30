@@ -15,4 +15,12 @@ class IndexController extends Controller
         $products = Products::get();
         return view('maryaaz.index')->with(compact('banners','categories','products'));
     }
+
+    public function category($id){
+        $categories = Category::with('categories')->where(['parentId' => 0])->get();
+        $products = Products::where(['category_id'=>$id])->get();
+        
+        return view('maryaaz.category')->with(compact('categories' , 'products'));
+
+    }
 }

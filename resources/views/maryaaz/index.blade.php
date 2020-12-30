@@ -49,7 +49,7 @@
                                     <div class="collapse" id="{{$cat->id}}" data-parent="#list-group-men">
                                         <div class="list-group">
                                             @foreach ($cat->categories as $subcat)
-                                            <a href="{{$subcat->url}}" class="list-group-item list-group-item-action active">{{$subcat->name}}</a>
+                                            <a href="{{url('/category/'.$subcat->id)}}" class="list-group-item list-group-item-action active">{{$subcat->name}}</a>
                                             @endforeach
                                         </div>
                                     </div>
