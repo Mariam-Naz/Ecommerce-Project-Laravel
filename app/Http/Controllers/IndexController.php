@@ -18,9 +18,9 @@ class IndexController extends Controller
 
     public function category($id){
         $categories = Category::with('categories')->where(['parentId' => 0])->get();
-        $products = Products::where(['category_id'=>$id])->get();
-        
-        return view('maryaaz.category')->with(compact('categories' , 'products'));
+        $products = Products::where(['category_id'=>$id,'status'=>1])->get();
+        $categoryName = Products::join("categories", "categories.id", "=", "products.category_id")->select('categories.name as category_name', 'categories.parentId as parent_cat')->where(['category_id' => $id])->first();
+        return view('maryaaz.category')->with(compact('categories' , 'products', 'categoryName'));
 
     }
 }

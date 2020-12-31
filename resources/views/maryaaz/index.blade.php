@@ -168,7 +168,7 @@
                                 </ul>
                             </div>
                         </div>
-
+                        <!--- PRODUCT SECTION -->
                         <div class="row product-categorie-box">
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
