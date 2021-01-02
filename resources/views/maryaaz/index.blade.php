@@ -1,4 +1,5 @@
 @extends('maryaaz.layouts.master')
+@section('title' , 'Home')
 @section('content')
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">

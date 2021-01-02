@@ -1,4 +1,4 @@
-$("#contactForm").validator().on("submit", function (event) {
+$(".contactForm").validator().on("submit", function (event) {
     if (event.isDefaultPrevented()) {
         // handle the invalid form...
         formError();
@@ -13,8 +13,8 @@ $("#contactForm").validator().on("submit", function (event) {
 
 function submitForm(){
     // Initiate Variables With Form Content
-    var name = $("#name").val();
-    var email = $("#email").val();
+    var name = $(".name").val();
+    var email = $(".email").val();
     var msg_subject = $("#msg_subject").val();
     var message = $("#message").val();
 
@@ -35,12 +35,12 @@ function submitForm(){
 }
 
 function formSuccess(){
-    $("#contactForm")[0].reset();
+    $(".contactForm")[0].reset();
     submitMSG(true, "Message Submitted!")
 }
 
 function formError(){
-    $("#contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(".contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
         $(this).removeClass();
     });
 }

@@ -1055,6 +1055,20 @@
  .tooltip.bs-tooltip-top .arrow:before {
      border-right-color: #d33b33 !important;
 }
+
+.or{
+    background-color: #d33b33;
+    border-radius: 100px;
+    font-family: sans-serif;
+    height: 48px;
+    font-size: 18px;
+    line-height: 48px;
+    margin-top: 55px;
+    margin-bottom: 55px;
+    text-align: center;
+    color: white;
+
+}
 /*------------------------------------------------------------------ Instagram Feed -------------------------------------------------------------------*/
  .instagram-box{
      padding: 70px 0px;

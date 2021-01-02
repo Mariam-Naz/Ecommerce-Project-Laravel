@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ use App\Http\Controllers\BannerController;
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
 Route::match(['get','post'],'/category/{id}' , [IndexController::class , 'category']);
 Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
+Route::match(['get', 'post'], '/login-register', [UserController::class, 'userloginRegister']);
 Route::get('/logout' , [AdminController::class,'logout']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
