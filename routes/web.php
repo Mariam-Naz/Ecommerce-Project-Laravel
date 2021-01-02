@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 // Route::view('/' , 'welcome');
 
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
+Route::get('/products/{id}', [ProductsController::class, 'products']);
 Route::match(['get','post'],'/category/{id}' , [IndexController::class , 'category']);
 Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
 

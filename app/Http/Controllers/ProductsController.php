@@ -107,4 +107,9 @@ class ProductsController extends Controller
         $data = $req->all();
         Products::where(['id'=>$data['id']])->update(['status'=>$data['status']]);
     }
+
+    public function products($id=null){
+        $productDetails = Products::where(['id'=>$id])->first();
+        return view('maryaaz.product_details')->with(compact('productDetails'));
+    }
 }
