@@ -48,8 +48,12 @@
                 <div class="our-link">
                     <ul>
                         <li><a href="#"><i class='fa fa-shopping-cart'></i> Cart</a></li>
-                        <li><a href="/login-register"><i class='fa fa-user'></i> Login</a></li>
-                        <li><a href="">Contact Us</a></li>
+                        @if(empty(Auth::check()))
+                        <li><a href="/login-register"><i class='fa fa-lock'></i> Login</a></li>
+                        @else
+                         <li><a href="/account"><i class='fa fa-user'></i> Account</a></li>
+                          <li><a href="/user-logout"><i class='fa fa-lock'></i> Logout</a></li>
+                        @endif
                     </ul>
                 </div>
             </div>

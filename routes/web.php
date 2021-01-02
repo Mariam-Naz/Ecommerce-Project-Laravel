@@ -23,7 +23,12 @@ use App\Http\Controllers\UserController;
 Route::match(['get','post'],'/',[IndexController::class, 'index']);
 Route::match(['get','post'],'/category/{id}' , [IndexController::class , 'category']);
 Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
+
+//USER LOGIN REGISTER ROUTES
 Route::match(['get', 'post'], '/login-register', [UserController::class, 'userloginRegister']);
+Route::match(['get', 'post'], '/user-register', [UserController::class, 'userRegister']);
+Route::get('/user-logout', [UserController::class, 'userLogout']);
+
 Route::get('/logout' , [AdminController::class,'logout']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
