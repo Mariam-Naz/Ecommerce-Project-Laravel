@@ -112,4 +112,13 @@ class ProductsController extends Controller
         $productDetails = Products::where(['id'=>$id])->first();
         return view('maryaaz.product_details')->with(compact('productDetails'));
     }
+
+    public function addAttributes(Request $request,$id=null){
+        $productDetails = Products::where(['id'=>$id])->first();
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>";print_r($data);die;
+        }
+        return view('admin.product.add_attributes')-with(compact('productDetails'));
+    }
 }

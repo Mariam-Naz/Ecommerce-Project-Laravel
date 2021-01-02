@@ -135,6 +135,7 @@
                         <td><input type='checkbox' rel='{{$product->id}}' class=' product-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->status == 1) checked @endif ></td>
                         <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
                         <td>
+                            <a class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/add-attributes/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
                             <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#{{$product->id}}"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
                         </td>
@@ -147,59 +148,54 @@
         </div>
         </div>
         </div>
-            <!-- Product Edit Model -->
+            <!-- Add Attribute Model -->
         @foreach ($products as $product)
-                    <div class="modal fade" id={{$product->id}} tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="attribute{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header modal-header-primary">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3><i class="fa fa-user m-r-5"></i> Update Product</h3>
+                                <h3><i class="fa fa-user m-r-5"></i> Add Attribute</h3>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/view-product/'.$product->id)}}> @csrf
+                                        <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/add-attributes/'.$product->id)}}> @csrf
                                         <fieldset>
 
                                             <!-- Text input-->
                                             <div class="col-md-6 form-group">
-                                                <label class="control-label">Product Name</label>
-                                                <input type="text" value="{{$product->name}}" placeholder="Product Name" class="form-control" name='product_name'>
-                                            </div>
-                                                <div class='form-group col-md-6'>
-                                            <label class="control-label">Category</label>
-                                            <select name='category_id' class="form-control">
-                                                    <option selected value='{{$product->category_id}}'> <?php echo $product->category_name ?> </option>
-                                                     <?php echo $category_dropdown ?>
-
-                                                </select>
+                                                <label class="control-label">Product Name</label> {{$product->name}}
                                             </div>
                                             <!-- Text input-->
                                             <div class="col-md-6 form-group">
-                                                <label class="control-label">Code</label>
-                                                <input type="text" placeholder="Code" class="form-control" name='product_code' value="{{$product->code}}">
+                                                <label class="control-label">Code</label> {{$product->code}}
                                             </div>
                                             <!-- Text input-->
                                             <div class="col-md-6 form-group">
-                                                <label class="control-label">Color</label>
-                                                <input type="color" class="form-control" name='product_color' value="{{$product->color}}">
+                                                <label class="control-label">Color</label> {{$product->color}}
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label class="control-label">Price</label>
-                                                <input type="number" placeholder="Price" class="form-control" value="{{$product->price}}" name='product_price'>
+                                                <label class="control-label">Price</label> {{$product->price}}
                                             </div>
-                                                <div class="form-group col-md-6">
+                                            <div class="col-md-6 form-group">
+                                                <div class="field_wrapper">
+                                                    <div style="display: flex;">
+                                                        <input type="text" name="sku[]" id="sku" placeholder="SKU" class="form-control" style="width: 65px"/>
+                                                        <input type="text" name="size[]" id="size" placeholder="Size" class="form-control" style="width: 65px"/>
+                                                        <input type="text" name="price[]" id="price" placeholder="Price" class="form-control" style="width: 65px"/>
+                                                        <input type="text" name="stock[]" id="stock" placeholder="Stock" class="form-control" style="width: 65px"/>
+                                                        <a href="javascript:void(0);" class="add_button" title="Add field" class="form-control">Add</a>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                                <div class="form-group col-md-3" style="margin-left: 2rem;">
                                                     @if(!empty($product->image))
                                                 <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
                                                 @endif
-                                        <label>Picture upload</label>
-                                        <input type="file" name="image">
-                                        <input type="hidden" name="current_image" value="{{$product->image}}">
                                     </div>
                                     <div class="col-md-12 form-group">
-                                                <label class="control-label">Description</label><br>
-                                                <textarea name="product_description" rows="5" cols='37'>{{$product->description}}</textarea>
+                                                <label class="control-label">Description</label><br> {{$product->description}}
                                             </div>
                                             <div class="col-md-12 form-group user-form-group">
                                                 <div class="pull-right">
@@ -222,6 +218,81 @@
         @endforeach
     </section>
             <!-- /.modal -->
+                <!-- Product Edit Model -->
+        @foreach ($products as $product)
+        <div class="modal fade" id={{$product->id}} tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3><i class="fa fa-user m-r-5"></i> Update Product</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/view-product/'.$product->id)}}> @csrf
+                            <fieldset>
+
+                                <!-- Text input-->
+                                <div class="col-md-6 form-group">
+                                    <label class="control-label">Product Name</label>
+                                    <input type="text" value="{{$product->name}}" placeholder="Product Name" class="form-control" name='product_name'>
+                                </div>
+                                    <div class='form-group col-md-6'>
+                                <label class="control-label">Category</label>
+                                <select name='category_id' class="form-control">
+                                        <option selected value='{{$product->category_id}}'> <?php echo $product->category_name ?> </option>
+                                         <?php echo $category_dropdown ?>
+
+                                    </select>
+                                </div>
+                                <!-- Text input-->
+                                <div class="col-md-6 form-group">
+                                    <label class="control-label">Code</label>
+                                    <input type="text" placeholder="Code" class="form-control" name='product_code' value="{{$product->code}}">
+                                </div>
+                                <!-- Text input-->
+                                <div class="col-md-6 form-group">
+                                    <label class="control-label">Color</label>
+                                    <input type="color" class="form-control" name='product_color' value="{{$product->color}}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="control-label">Price</label>
+                                    <input type="number" placeholder="Price" class="form-control" value="{{$product->price}}" name='product_price'>
+                                </div>
+                                    <div class="form-group col-md-6">
+                                        @if(!empty($product->image))
+                                    <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
+                                    @endif
+                            <label>Picture upload</label>
+                            <input type="file" name="image">
+                            <input type="hidden" name="current_image" value="{{$product->image}}">
+                        </div>
+                        <div class="col-md-12 form-group">
+                                    <label class="control-label">Description</label><br>
+                                    <textarea name="product_description" rows="5" cols='37'>{{$product->description}}</textarea>
+                                </div>
+                                <div class="col-md-12 form-group user-form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-add" name='save'>Save</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+@endforeach
+</section>
+<!-- /.modal -->
             <!-- Modal -->
 <!-- Product Delete Model -->
             @foreach ($products as $product)
