@@ -30,6 +30,16 @@
                 {{session('product-deleted-message')}}
             </div>
             @endif
+            @if(Session::has('attributes-add-success'))
+            <div class="alert alert-success">
+                {{session('attributes-add-success')}}
+            </div>
+            @endif
+            @if(Session::has('atrributes-add-error'))
+                <div class="alert alert-danger">
+                    {{session('atrributes-add-error')}}
+                </div>
+                @endif
         <div id='message_error' style='display:none;' class='alert alert-danger'>
         Status Disabled</div>
         <div id='message_success' style='display:none;' class='alert alert-success'>Status Enabled</div>
@@ -135,7 +145,7 @@
                         <td><input type='checkbox' rel='{{$product->id}}' class=' product-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->status == 1) checked @endif ></td>
                         <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
                         <td>
-                            <a class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/add-attributes/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
+                            <a class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
                             <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#{{$product->id}}"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
                         </td>
@@ -161,9 +171,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/add-attributes/'.$product->id)}}> @csrf
-                                        <fieldset>
+                                        
 
                                             <!-- Text input-->
+                                            <div class="row">
+                                            <div class="col-md-8">
                                             <div class="col-md-6 form-group">
                                                 <label class="control-label">Product Name</label> {{$product->name}}
                                             </div>
@@ -178,6 +190,65 @@
                                             <div class="col-md-6 form-group">
                                                 <label class="control-label">Price</label> {{$product->price}}
                                             </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="form-group">
+                                                @if(!empty($product->image))
+                                            <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="100" height="100" style='margin-bottom:5px;'>
+                                            @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <section>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="panel panel-bd">
+                                                        <div class="panel-heading">
+                                                            <div class="btn-group" id="buttonexport">
+                                                                <a href={{url('admin/view-products')}}>
+                                                                    <h4>Attributes</h4>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                <div class="panel-body">
+                                            <!----------------------- TABLE ------------------------------------------------------>
+                                            <div>        
+                                            <div class="table-responsive">
+                                                        <table id="table_id" class="table table-bordered table-striped">
+                                                            <thead>
+                                                            <tr class="info">
+                                                                <th>Category ID</th>
+                                                                <th>Product ID</th>
+                                                                <th>SKU</th>
+                                                                <th>Size</th>
+                                                                <th>Price</th>
+                                                                <th>Stock</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($productDetails['attributes'] as $attribute)
+                                                            <tr>
+                                                                <td>{{$attribute->id}}</td>
+                                                                <td>{{$attribute->product_id}}</td>
+                                                                <td>{{$attribute->sku}}</td>
+                                                                <td>{{$attribute->size}}</td>
+                                                                <td>{{$attribute->price}}</td>
+                                                                <td>{{$attribute->stock}}</td>
+                                                                <td>
+                                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </section>
                                             <div class="col-md-6 form-group">
                                                 <div class="field_wrapper">
                                                     <div style="display: flex;">
@@ -189,11 +260,6 @@
                                                     </div>
                                                 </div>
                                               </div>
-                                                <div class="form-group col-md-3" style="margin-left: 2rem;">
-                                                    @if(!empty($product->image))
-                                                <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="50" height="50" style='margin-bottom:5px;'>
-                                                @endif
-                                    </div>
                                     <div class="col-md-12 form-group">
                                                 <label class="control-label">Description</label><br> {{$product->description}}
                                             </div>
@@ -202,7 +268,6 @@
                                                     <button type="submit" class="btn btn-add" name='save'>Save</button>
                                                 </div>
                                             </div>
-                                        </fieldset>
                                         </form>
                                     </div>
                                 </div>

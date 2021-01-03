@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Products extends Model
 {
-    use HasFactory;
+    public function attributes(){
+        return $this->hasMany('App\ProductsAttributes','product_id');
+    }
 }

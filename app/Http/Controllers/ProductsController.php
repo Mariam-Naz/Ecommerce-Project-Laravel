@@ -115,7 +115,7 @@ class ProductsController extends Controller
     }
 
     public function addAttributes(Request $request,$id=null){
-        $productDetails = Products::where(['id'=>$id])->first();
+        $productDetails = Products::with('attributes')->where(['id'=>$id])->first();
         if($request->isMethod('post')){
             $data = $request->all();
             foreach($data['sku'] as $key => $val){
@@ -123,12 +123,12 @@ class ProductsController extends Controller
                     //Prevent Duplicate SKU Records
                     $attrCountSKU = ProductsAttributes::where('sku',$val)->count();
                     if($attrCountSKU > 0){
-                        return redirect('/admin/view-products/')->with('product-deleted-message','SKU Already Exists');
+                        return redirect('/admin/view-products/')->with('atrributes-add-error','SKU Already Exists');
                     }
                     //Prevent Duplicate Size Records
                     $attrCountSize = ProductsAttributes::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
                     if($attrCountSize > 0){
-                        return redirect('/admin/view-products/')->with('product-deleted-message',''.$data['size'][$key].' Size Already Exists');
+                        return redirect('/admin/view-products/')->with('atrributes-add-error',''.$data['size'][$key].' Size Already Exists');
                     }
                     $atrribute = new ProductsAttributes;
                     $atrribute->product_id = $id;
@@ -139,8 +139,8 @@ class ProductsController extends Controller
                     $atrribute->save();
                 }
             }
-            return redirect('/admin/view-products/')->with('update-message','Attributes Added Successfully');
+            return redirect('/admin/view-products/')->with('attributes-add-success','Attributes Added Successfully');
         }
-        return view('admin.product.add_attributes')-with(compact('productDetails'));
+        return view('admin.product.view-product')->with(compact('productDetails'));
     }
 }
