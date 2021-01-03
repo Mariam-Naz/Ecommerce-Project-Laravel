@@ -8,6 +8,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use App\Models\Products;
 use App\Models\Category;
+use App\Models\ProductsAttributes;
 use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
@@ -117,7 +118,28 @@ class ProductsController extends Controller
         $productDetails = Products::where(['id'=>$id])->first();
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>";print_r($data);die;
+            foreach($data['sku'] as $key => $val){
+                if(!empty($val)){
+                    //Prevent Duplicate SKU Records
+                    $attrCountSKU = ProductsAttributes::where('sku',$val)->count();
+                    if($attrCountSKU > 0){
+                        return redirect('/admin/view-products/')->with('product-deleted-message','SKU Already Exists');
+                    }
+                    //Prevent Duplicate Size Records
+                    $attrCountSize = ProductsAttributes::where(['product_id'=>$id,'size'=>$data['size'][$key]])->count();
+                    if($attrCountSize > 0){
+                        return redirect('/admin/view-products/')->with('product-deleted-message',''.$data['size'][$key].' Size Already Exists');
+                    }
+                    $atrribute = new ProductsAttributes;
+                    $atrribute->product_id = $id;
+                    $atrribute->sku = $val;
+                    $atrribute->size = $data['size'][$key];
+                    $atrribute->price = $data['price'][$key];
+                    $atrribute->stock = $data['stock'][$key];
+                    $atrribute->save();
+                }
+            }
+            return redirect('/admin/view-products/')->with('update-message','Attributes Added Successfully');
         }
         return view('admin.product.add_attributes')-with(compact('productDetails'));
     }
