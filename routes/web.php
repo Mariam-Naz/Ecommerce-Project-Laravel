@@ -28,6 +28,7 @@ Route::match(['get', 'post'], '/admin', [AdminController::class, 'login']);
 //USER LOGIN REGISTER ROUTES
 Route::match(['get', 'post'], '/login-register', [UserController::class, 'userloginRegister']);
 Route::match(['get', 'post'], '/user-register', [UserController::class, 'userRegister']);
+Route::match(['get', 'post'], '/user-login', [UserController::class, 'userLogin']);
 Route::get('/user-logout', [UserController::class, 'userLogout']);
 
 Route::get('/logout' , [AdminController::class,'logout']);

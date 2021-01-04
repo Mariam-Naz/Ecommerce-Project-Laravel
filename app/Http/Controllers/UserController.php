@@ -30,7 +30,19 @@ class UserController extends Controller
             }
         }
         }
-        return view('maryaaz.user.login_register');
+       
+    }
+
+    public function userLogin(Request $req){
+        if ($req->isMethod('post')) {
+            $data = $req->input();
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                return redirect('/');
+            } else {
+                return redirect()->back()->with('login-error-message', 'Invalid Email or Password!');
+            }
+        }
+        return view('admin.admin-login');
     }
 
     public function userLogout(){

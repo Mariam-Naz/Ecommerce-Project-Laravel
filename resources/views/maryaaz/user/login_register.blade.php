@@ -53,8 +53,15 @@
          <!----------------------------- SIGN IN ----------------------------------------->
                       <div class='col-lg-6 col-sm-12'>
                             <div class='contact-form-right'>
+                                @if(Session::has('login-error-message'))
+                                        <div class='alert alert-danger alert-dismissible fade show' role="alert">{{session('login-error-message')}}
+                                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        @endif
                         <h2>Already a Member? Just SignIn</h2>
-                        <form class="">
+                        <form action="{{url('/user-login')}}" method='POST'>@csrf
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
