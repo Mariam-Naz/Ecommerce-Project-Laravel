@@ -30,6 +30,11 @@
                 {{session('product-deleted-message')}}
             </div>
             @endif
+            @if(Session::has('attribute-deleted'))
+            <div class="alert alert-danger">
+                {{session('attribute-deleted')}}
+            </div>
+            @endif
             @if(Session::has('attributes-add-success'))
             <div class="alert alert-success">
                 {{session('attributes-add-success')}}
@@ -227,7 +232,8 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($productDetails['attributes'] as $attribute)
+                                                                @foreach ($attributes as $attribute)
+                                                                @if ($attribute->product_id == $product->id)
                                                             <tr>
                                                                 <td>{{$attribute->id}}</td>
                                                                 <td>{{$attribute->product_id}}</td>
@@ -236,9 +242,10 @@
                                                                 <td>{{$attribute->price}}</td>
                                                                 <td>{{$attribute->stock}}</td>
                                                                 <td>
-                                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
+                                                                    <a href="{{url('/admin/delete-attribute/'.$attribute->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> </a>
                                                                 </td>
                                                             </tr>
+                                                            @endif
                                                             @endforeach
                                                             </tbody>
                                                         </table>

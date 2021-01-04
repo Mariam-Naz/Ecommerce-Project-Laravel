@@ -69,7 +69,8 @@ class ProductsController extends Controller
                 $category_dropdown .= "<option value='" . $sub_cat->id . "'>&nbsp;--&nbsp;" . $sub_cat->name . "</option>";
             }
         }
-        return view('admin.product.viewProducts' , ['categories' =>$categories] , ['category_dropdown'=> $category_dropdown],['parent_categories'=> $parent_categories])->with(compact('products'));
+        $attributes = DB::table('products_attributes')->get();
+        return view('admin.product.viewProducts' , ['categories' =>$categories] , ['category_dropdown'=> $category_dropdown],['parent_categories'=> $parent_categories])->with(compact('products','attributes'));
 
 
     }
@@ -103,6 +104,11 @@ class ProductsController extends Controller
         Products::where(['id'=>$id])->delete();
         return redirect()->back()->with('product-deleted-message', 'Product has been deleted successfully!!');
     }
+    
+    public function deleteAttribute($id=null){
+        ProductsAttributes::where(['id'=>$id])->delete();
+        return redirect()->back()->with('attribute-deleted', 'Attribute has been deleted successfully!!');
+    }
 
     public function updateStatus(Request $req , $id=null){
         $data = $req->all();
@@ -115,7 +121,6 @@ class ProductsController extends Controller
     }
 
     public function addAttributes(Request $request,$id=null){
-        $productDetails = Products::with('attributes')->where(['id'=>$id])->first();
         if($request->isMethod('post')){
             $data = $request->all();
             foreach($data['sku'] as $key => $val){
