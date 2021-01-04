@@ -30,12 +30,17 @@ Route::match(['get', 'post'], '/login-register', [UserController::class, 'userlo
 Route::match(['get', 'post'], '/user-register', [UserController::class, 'userRegister']);
 Route::match(['get', 'post'], '/user-login', [UserController::class, 'userLogin']);
 Route::get('/user-logout', [UserController::class, 'userLogout']);
-
 Route::get('/logout' , [AdminController::class,'logout']);
+Route::match(['get', 'post'], '/change-password', [UserController::class, 'changePassword']);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::group(['middleware' => ['frontLogin']], function () {
+    Route::match(['get', 'post'], '/account', [UserController::class, 'userAccount']);
+});
 
 Route::group(['middleware'=>['auth']], function(){
     Route::match(['get', 'post'], '/admin/dashboard', [AdminController::class, 'dashboard']);

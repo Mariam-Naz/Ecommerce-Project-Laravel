@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -26,17 +27,19 @@ class UserController extends Controller
                 $user->password = bcrypt($data['password']);
                 $user->save();
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                Session::put('frontSession', $data['email']);
                 return redirect('/');
             }
         }
         }
-       
+
     }
 
     public function userLogin(Request $req){
         if ($req->isMethod('post')) {
             $data = $req->input();
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                Session::put('frontSession', $data['email']);
                 return redirect('/');
             } else {
                 return redirect()->back()->with('login-error-message', 'Invalid Email or Password!');
@@ -46,7 +49,16 @@ class UserController extends Controller
     }
 
     public function userLogout(){
+        Session()->forget('frontSession');
         Auth::logout();
         return redirect('/');
+    }
+
+    public function userAccount(){
+        return view('maryaaz.user.account');
+    }
+
+    public function changePassword(){
+        return view('maryaaz.user.change_password');
     }
 }
