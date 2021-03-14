@@ -162,6 +162,27 @@
                                         <label>Url</label>
                                         <input type="url" value="{{$category->url}}" placeholder="Url" class="form-control" name='category_url'>
                                        </div>
+                                         <div class="form-group col-md-12">
+                                 <label>Parent Category</label>
+                                 <select class="form-control" name='parent_id' required>
+                                     @if($category->parentId ==0)
+                                     <option value="0" selected>-- Parent Category --</option>
+                                     @foreach ($levels as $level)
+                                        <option value="{{$level->id}}">{{$level->name}}</option>
+                                     @endforeach
+                                     @else
+                                    @foreach ($levels as $level)
+                                     @if($category->parentId == $level->id)
+                                    <option value='{{$level->id}}' selected>{{$level->name}}</option>
+                                    <option value="0">-- Parent Category --</option>
+                                        @endif
+                                        @if($category->parentId != $level->id)
+                                         <option value="{{$level->id}}">{{$level->name}}</option>
+                                         @endif
+                                    @endforeach
+                                    @endif
+                                 </select>
+                              </div>
                                        <!-- Text input-->
                                        <div class="col-md-12 form-group">
                                           <label class="control-label">Description</label>

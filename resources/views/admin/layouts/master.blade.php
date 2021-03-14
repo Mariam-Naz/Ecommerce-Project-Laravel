@@ -235,13 +235,13 @@
             var maxField = 10; //Input fields increment limitation
             var addButton = $('.add_button'); //Add button selector
             var wrapper = $('.field_wrapper'); //Input field wrapper
-            var fieldHTML = '<div style="display: flex; margin-top: 5px;"><input type="text" name="sku[]" id="sku" placeholder="SKU" class="form-control" style="width: 65px"/><input type="text" name="size[]" id="size" placeholder="Size" class="form-control" style="width: 65px"/><input type="text" name="price[]" id="price" placeholder="Price" class="form-control" style="width: 65px"/><input type="text" name="stock[]" id="stock" placeholder="Stock" class="form-control" style="width: 65px"/><a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html 
+            var fieldHTML = '<div style="display: flex; margin: 10px 90px;"><input type="text" name="sku[]" id="sku" placeholder="SKU" class="form-control" style="width: 85px"/><input type="text" name="size[]" id="size" placeholder="Size" class="form-control" style="width: 85px"/><input type="text" name="price[]" id="price" placeholder="Price" class="form-control" style="width: 85px"/><input type="text" name="stock[]" id="stock" placeholder="Stock" class="form-control" style="width: 85px"/><a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html
             var x = 1; //Initial field counter is 1
 
             //Once add button is clicked
             $(addButton).click(function(){
                 //Check maximum number of input fields
-                if(x < maxField){ 
+                if(x < maxField){
                     x++; //Increment field counter
                     $(wrapper).append(fieldHTML); //Add field html
                 }
@@ -253,7 +253,71 @@
                 $(this).parent('div').remove(); //Remove field html
                 x--; //Decrement field counter
             });
+
+            //EDIT ATTRIBUTE
+            $('.edit-attr').on('click',function(){
+                var editId = $(this).attr('id');
+                var sku = $('input[ data-id="sku'+editId+'"]').val();
+                var size = $('input[data-id="size'+editId+'"]').val();
+                var price = $('input[data-id="price'+editId+'"]').val();
+                var stock = $('input[data-id="stock'+editId+'"]').val();
+                var proId = $('input[data-id="product'+editId+'"]').val();
+                 $.ajax({
+                     headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/edit-attribute/'+editId,
+                data: {
+                    sku: sku,
+                    size: size,
+                    price: price,
+                    stock: stock
+                },
+                success:function(){
+
+                     $('#attribute'+proId).find('#message_update'+proId).show();
+                    setTimeout(function(){
+                        $('#message_update'+proId).fadeOut('slow');
+                    }, 1000)
+                },
+                error:function(){
+                    alert('Error');
+                }
+             })
+            })
+
+            //DELETE ATTRIBUTE
+            $('.delete-attr').on('click',function(){
+                  var deleteId = $(this).attr('data-id');
+                   var proId = $('input[data-id="product'+deleteId+'"]').val();
+                  console.log(deleteId);
+                   $.ajax({
+                     headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/delete-attribute/'+deleteId,
+                data: {
+                   deleteId: deleteId
+                },
+                success:function(data){
+                    data = $(data).find('#attribute'+proId+ ' #attr_table').html();
+
+                     $('#attribute'+proId).find('#message_delete'+proId).show();
+                    setTimeout(function(){
+                        $('#message_delete'+proId).fadeOut('slow');
+                    }, 1000)
+                     $('#attribute'+proId).find('#tr'+deleteId).remove();
+                },
+                error:function(){
+                    alert('Error');
+                }
+             })
+            })
             });
+
+
         </script>
 
 

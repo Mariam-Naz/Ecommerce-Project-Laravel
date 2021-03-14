@@ -59,6 +59,7 @@ class UserController extends Controller
     }
 
     public function changePassword(){
+        
         return view('maryaaz.user.change_password');
     }
 }

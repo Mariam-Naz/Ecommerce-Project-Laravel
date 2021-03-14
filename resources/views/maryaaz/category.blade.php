@@ -151,7 +151,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                       <div class="title-all text-center">
-                                        <h1>{{$categoryName->category_name}}</h1>
+                                        <h1>{{$categoryName->name}}</h1>
                                     </div>
                                     <div class="row">
                                         @foreach ($products as $product)

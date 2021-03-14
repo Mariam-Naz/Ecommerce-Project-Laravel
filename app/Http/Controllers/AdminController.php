@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+   
     public function login(Request $req){
         if($req->isMethod('post')){
             $data = $req->input();

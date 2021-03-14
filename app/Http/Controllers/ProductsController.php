@@ -104,10 +104,10 @@ class ProductsController extends Controller
         Products::where(['id'=>$id])->delete();
         return redirect()->back()->with('product-deleted-message', 'Product has been deleted successfully!!');
     }
-    
+
     public function deleteAttribute($id=null){
         ProductsAttributes::where(['id'=>$id])->delete();
-        return redirect()->back()->with('attribute-deleted', 'Attribute has been deleted successfully!!');
+        // return redirect('/admin/view-products/');
     }
 
     public function updateStatus(Request $req , $id=null){
@@ -147,5 +147,12 @@ class ProductsController extends Controller
             return redirect('/admin/view-products/')->with('attributes-add-success','Attributes Added Successfully');
         }
         return view('admin.product.view-product')->with(compact('productDetails'));
+    }
+
+    public function editAttribute(Request $request, $id=null){
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            ProductsAttributes::where(['id'=>$id])->update(['sku'=>$data['sku'],'size'=>$data['size'],'price'=>$data['price'],'stock'=>$data['stock']]);
+        }
     }
 }

@@ -34,9 +34,9 @@ Route::get('/logout' , [AdminController::class,'logout']);
 Route::match(['get', 'post'], '/change-password', [UserController::class, 'changePassword']);
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 Route::group(['middleware' => ['frontLogin']], function () {
     Route::match(['get', 'post'], '/account', [UserController::class, 'userAccount']);
@@ -62,6 +62,7 @@ Route::group(['middleware'=>['auth']], function(){
     //Product Attributes
     Route::match(['get', 'post'], '/admin/add-attributes/{id}', [ProductsController::class, 'addAttributes']);
     Route::match(['get', 'post'], '/admin/delete-attribute/{id}', [ProductsController::class, 'deleteAttribute']);
+    Route::match(['get', 'post'], '/admin/edit-attribute/{id}', [ProductsController::class, 'editAttribute']);
 
     //Banner Routes
     Route::match(['get', 'post'], '/admin/add-banner', [BannerController::class, 'addBanner']);

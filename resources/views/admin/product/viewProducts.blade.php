@@ -35,16 +35,17 @@
                 {{session('attribute-deleted')}}
             </div>
             @endif
-            @if(Session::has('attributes-add-success'))
-            <div class="alert alert-success">
-                {{session('attributes-add-success')}}
-            </div>
-            @endif
+
             @if(Session::has('atrributes-add-error'))
                 <div class="alert alert-danger">
                     {{session('atrributes-add-error')}}
                 </div>
                 @endif
+                @if(Session::has('attributes-add-success'))
+            <div class="alert alert-success">
+                {{session('attributes-add-success')}}
+            </div>
+            @endif
         <div id='message_error' style='display:none;' class='alert alert-danger'>
         Status Disabled</div>
         <div id='message_success' style='display:none;' class='alert alert-success'>Status Enabled</div>
@@ -175,8 +176,6 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/add-attributes/'.$product->id)}}> @csrf
-                                        
 
                                             <!-- Text input-->
                                             <div class="row">
@@ -215,67 +214,85 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                <div class="panel-body">
+                                                         <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/add-attributes/'.$product->id)}}> @csrf
+                                                                  <div class="form-group" style='margin:auto;'>
+                                                <div class="field_wrapper" >
+                                                    <div style="display: flex; margin: 10px 90px;">
+                                                        <input type="text" name="sku[]" id="sku" placeholder="SKU" class="form-control" style="width: 85px"/>
+                                                        <input type="text" name="size[]" id="size" placeholder="Size" class="form-control" style="width: 85px"/>
+                                                        <input type="text" name="price[]" id="price" placeholder="Price" class="form-control" style="width: 85px"/>
+                                                        <input type="text" name="stock[]" id="stock" placeholder="Stock" class="form-control" style="width: 85px"/>
+                                                        <a href="javascript:void(0);" class="btn btn-primary add_button" title="Add field" class="form-control">Add</a>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                                <div class="col-md-12 form-group user-form-group">
+                                                <div class="pull-right">
+                                                    <button type="submit" class="btn btn-add" name='save'>Save</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                                 </div>
+                                                <div class="panel-body col-sm-12">
+
                                             <!----------------------- TABLE ------------------------------------------------------>
-                                            <div>        
+                                                    <div id='message_update{{$product->id}}' class='alert alert-success' hidden>
+                                                       Attribute updated successfully
+                                                    </div>
+                                                     <div id='message_delete{{$product->id}}' class='alert alert-danger' hidden>
+                                                       Attribute deleted successfully
+                                                    </div>
                                             <div class="table-responsive">
-                                                        <table id="table_id" class="table table-bordered table-striped">
+
+                                                        <table id="attr_table" class="table table-bordered table-striped">
                                                             <thead>
                                                             <tr class="info">
-                                                                <th>Category ID</th>
-                                                                <th>Product ID</th>
+                                                                <th>ID</th>
                                                                 <th>SKU</th>
                                                                 <th>Size</th>
                                                                 <th>Price</th>
                                                                 <th>Stock</th>
                                                                 <th>Action</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($attributes as $attribute)
-                                                                @if ($attribute->product_id == $product->id)
-                                                            <tr>
-                                                                <td>{{$attribute->id}}</td>
-                                                                <td>{{$attribute->product_id}}</td>
-                                                                <td>{{$attribute->sku}}</td>
-                                                                <td>{{$attribute->size}}</td>
-                                                                <td>{{$attribute->price}}</td>
-                                                                <td>{{$attribute->stock}}</td>
-                                                                <td>
-                                                                    <a href="{{url('/admin/delete-attribute/'.$attribute->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> </a>
-                                                                </td>
-                                                            </tr>
-                                                            @endif
-                                                            @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </section>
-                                            <div class="col-md-6 form-group">
-                                                <div class="field_wrapper">
-                                                    <div style="display: flex;">
-                                                        <input type="text" name="sku[]" id="sku" placeholder="SKU" class="form-control" style="width: 65px"/>
-                                                        <input type="text" name="size[]" id="size" placeholder="Size" class="form-control" style="width: 65px"/>
-                                                        <input type="text" name="price[]" id="price" placeholder="Price" class="form-control" style="width: 65px"/>
-                                                        <input type="text" name="stock[]" id="stock" placeholder="Stock" class="form-control" style="width: 65px"/>
-                                                        <a href="javascript:void(0);" class="add_button" title="Add field" class="form-control">Add</a>
-                                                    </div>
-                                                </div>
-                                              </div>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($attributes as $attribute)
+                                                    @if ($attribute->product_id == $product->id)
+
+                                                <tr id='tr{{$attribute->id}}'>
+                                                    <td>{{$attribute->id}}</td>
+                                                    <input type="hidden" name='pro' data-id='product{{$attribute->id}}' value={{$product->id}}>
+                                                    <td><input type="text" name="sku" data-id='sku{{$attribute->id}}' placeholder="SKU" class="form-control" value={{$attribute->sku}} style="width: 85px"/></td>
+                                                    <td><input type="text" name="size" data-id='size{{$attribute->id}}'' placeholder="Size" class="form-control" value={{$attribute->size}} style="width: 85px"/></td>
+                                                    <td><input type="text" name="price" data-id='price{{$attribute->id}}' placeholder="Price" class="form-control" value={{$attribute->price}} style="width: 85px"/></td>
+                                                    <td><input type="number" name="stock" data-id='stock{{$attribute->id}}' placeholder="Stock" class="form-control" value={{$attribute->stock}} style="width: 55px"/></td>
+                                                    <td>
+                                                        <div class='btn-group'>
+                                                                <button type="button" name="update" class='btn btn-add btn-sm edit-attr' id={{$attribute->id}}><i class="fa fa-pencil-square-o"></i> </button>
+                                                        <button class="btn btn-danger btn-sm delete-attr" data-id={{$attribute->id}}><i class="fa fa-trash-o"></i> </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                @endif
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                </section>
+
                                     <div class="col-md-12 form-group">
                                                 <label class="control-label">Description</label><br> {{$product->description}}
                                             </div>
-                                            <div class="col-md-12 form-group user-form-group">
-                                                <div class="pull-right">
-                                                    <button type="submit" class="btn btn-add" name='save'>Save</button>
-                                                </div>
-                                            </div>
-                                        </form>
+
+
                                     </div>
                                 </div>
                             </div>
