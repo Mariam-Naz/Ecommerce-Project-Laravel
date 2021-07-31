@@ -151,9 +151,10 @@
                         <td><input type='checkbox' rel='{{$product->id}}' class=' product-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->status == 1) checked @endif ></td>
                         <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
                         <td>
-                            <a class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
-                            <a class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#{{$product->id}}"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
+                            <a title="Add Images" class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#image{{$product->id}}"><i class="fa fa-image"></i></a>
+                            <a title="Add Attributes" class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
+                            <a title="Edit Product" class="btn btn-add btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#{{$product->id}}"><i class="fa fa-pencil"></i></a>
+                            <a title="Delete Image" href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i> </a>
                         </td>
                     </tr>
                         @endforeach
@@ -306,6 +307,106 @@
                     </div>
         @endforeach
     </section>
+            <!-- /.modal -->
+                        <!-- Add Image Model -->
+        @foreach ($products as $product)
+                    <div class="modal fade" id="image{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header modal-header-primary">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3><i class="fa fa-user m-r-5"></i> Add Image</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                <div class="col-md-12">
+
+                                            <!-- Text input-->
+                                            <div class="row">
+                                            <div class="col-md-8">
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label">Product Name</label> {{$product->name}}
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label">Code</label> {{$product->code}}
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label">Color</label> {{$product->color}}
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <label class="control-label">Price</label> {{$product->price}}
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="form-group">
+                                                @if(!empty($product->image))
+                                            <img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="100" height="100" style='margin-bottom:5px;'>
+                                            @endif
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <form class="" method='post' enctype="multipart/form-data" action={{url('/admin/add-images/'.$product->id)}}> @csrf
+                                                <div class="form-group" style='margin:auto;'>
+                                                <div class="field_wrapper" >
+                                                <div class="form-group">
+                                                    <input type="hidden" name="product_id" value={{$product->id}}>
+                                                    <label>Images</label>
+                                                    <input type="file" name="image[]" id = "image" multiple="multiple">
+                                                </div>
+                                                </div>
+                                              </div>
+                                                <div class="col-md-12 form-group user-form-group">
+                                                <div class="pull-right">
+                                                    <button type="submit" class="btn btn-add" name='save'>Save</button>
+                                                </div>
+                                                </form>
+                                                <div class="table-responsive">
+
+                                                    <table id="attr_table" class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr class="info">
+                                                            <th>ID</th>
+                                                            <th>Image</th>
+                                                            <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($images as $image)
+                                                @if ($attribute->product_id == $product->id)
+
+                                            <tr id='tr{{$attribute->id}}'>
+                                                <td>{{$attribute->id}}</td>
+                                                <input type="hidden" name='pro' data-id='product{{$image->id}}' value={{$product->id}}>
+                                                <td><img src="{{asset('uploads/products/'.$image->image)}}"alt={{$image->image}} width="100" height="100" style='margin-bottom:5px;'></td>
+                                                <td>
+                                                    <div class='btn-group'>
+                                                            <button type="button" name="update" class='btn btn-add btn-sm edit-attr' id={{$attribute->id}}><i class="fa fa-pencil-square-o"></i> </button>
+                                                    <button class="btn btn-danger btn-sm delete-attr" data-id={{$attribute->id}}><i class="fa fa-trash-o"></i> </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            @endif
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+        @endforeach
             <!-- /.modal -->
                 <!-- Product Edit Model -->
         @foreach ($products as $product)

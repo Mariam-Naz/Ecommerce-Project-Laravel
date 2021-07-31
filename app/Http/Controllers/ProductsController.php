@@ -8,6 +8,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
 use App\Models\Products;
 use App\Models\Category;
+use App\Models\ProductsImages;
 use App\Models\ProductsAttributes;
 use Intervention\Image\Facades\Image;
 
@@ -70,7 +71,8 @@ class ProductsController extends Controller
             }
         }
         $attributes = DB::table('products_attributes')->get();
-        return view('admin.product.viewProducts' , ['categories' =>$categories] , ['category_dropdown'=> $category_dropdown],['parent_categories'=> $parent_categories])->with(compact('products','attributes'));
+        $images = DB::table('products_images')->get();
+        return view('admin.product.viewProducts' , ['categories' =>$categories] , ['category_dropdown'=> $category_dropdown],['parent_categories'=> $parent_categories])->with(compact('products','attributes','images'));
 
 
     }
@@ -154,5 +156,34 @@ class ProductsController extends Controller
             $data = $request->all();
             ProductsAttributes::where(['id'=>$id])->update(['sku'=>$data['sku'],'size'=>$data['size'],'price'=>$data['price'],'stock'=>$data['stock']]);
         }
+    }
+
+    public function editImages(Request $request, $id=null){
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            ProductsAttributes::where(['id'=>$id])->update(['sku'=>$data['sku'],'size'=>$data['size'],'price'=>$data['price'],'stock'=>$data['stock']]);
+        }
+    }
+
+    public function addImages(Request $request, $id=null){
+        $productDetails = Products::where(['id'=>$id])->first();
+        if($request->isMethod('post')){
+            $data = $request->all();
+            if($request->hasFile('image')){
+                $files = $request->file('image');
+                foreach($files as $file){
+                    $image = new ProductsImages;
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = rand(111,9999).'.'.$extension;
+                    $image_path = 'uploads/products/'.$filename;
+                    Image::make($file)->save($image_path);
+                    $image->image = $filename;
+                    $image->product_id = $data['product_id'];
+                    $image->save(); 
+                }
+            }
+            return redirect('/admin/view-products')->with('attributes-add-success','Images Added Successfully');
+        }
+        return view('admin.product.viewProducts')->with(compact('productDetails'));
     }
 }
