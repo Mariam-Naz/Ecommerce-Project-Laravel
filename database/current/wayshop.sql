@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 31, 2021 at 11:01 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Host: localhost
+-- Generation Time: Aug 01, 2021 at 02:24 PM
+-- Server version: 10.4.16-MariaDB
+-- PHP Version: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -162,6 +162,7 @@ CREATE TABLE `products` (
   `price` int(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0,
+  `featured_product` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -170,9 +171,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `code`, `color`, `description`, `price`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(15, 10, 'tshirt', 'Tdagger', '#000000', 'wewe', 345, '50101.jpg', 1, '2020-12-29', '2021-01-03'),
-(16, 10, 'Mariam', 'Mars', '#f50000', 'mammamm', 999999, '77314.jpg', 1, '2021-01-03', '2021-01-03');
+INSERT INTO `products` (`id`, `category_id`, `name`, `code`, `color`, `description`, `price`, `image`, `status`, `featured_product`, `created_at`, `updated_at`) VALUES
+(15, 10, 'tshirt', 'Tdagger', '#000000', 'wewe', 345, '50101.jpg', 1, 1, '2020-12-29', '2021-08-01'),
+(16, 10, 'Mariam', 'Mars', '#f50000', 'mammamm', 999999, '77314.jpg', 1, 1, '2021-01-03', '2021-08-01');
 
 -- --------------------------------------------------------
 
@@ -242,7 +243,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('GMgg1QApQ8tjdeuyESsM4iDXEMeFU5xGYirBdll7', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36 OPR/77.0.4054.275 (Edition Campaign 34)', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidFlyRGtiU3plQmdpaldiY09LOW9uT2pYSEVEeThTMHFTbmFVeVhMbSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi92aWV3LXByb2R1Y3RzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJFB4UzhOOFoyREo5NncvMzBUMFo1WU9EbEg5NmcvWFRSa2ZvOGNYN1dRbU00azJyRDVUN2lDIjt9', 1627765236);
+('GMgg1QApQ8tjdeuyESsM4iDXEMeFU5xGYirBdll7', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36 OPR/77.0.4054.275 (Edition Campaign 34)', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidFlyRGtiU3plQmdpaldiY09LOW9uT2pYSEVEeThTMHFTbmFVeVhMbSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi92aWV3LXByb2R1Y3RzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJFB4UzhOOFoyREo5NncvMzBUMFo1WU9EbEg5NmcvWFRSa2ZvOGNYN1dRbU00azJyRDVUN2lDIjt9', 1627765236),
+('u6YadnFZyXyeBs6hMKC4PqwV2D4qVCuoo6CTtl9a', 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoianEyZ0JuOVdJVnk0TzJRdTRXYTk5UlhOTUwyZUdTa3RKVFR5VHR0byI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wcm9kdWN0cy8xNSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRQeFM4TjhaMkRKOTZ3LzMwVDBaNVlPRGxIOTZnL1hUUmtmbzhjWDdXUW1NNGsyckQ1VDdpQyI7fQ==', 1627820517);
 
 -- --------------------------------------------------------
 

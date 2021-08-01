@@ -151,6 +151,45 @@
         }
     });
 
+      $('.featured-product').change(function(){
+        var id = $(this).attr('rel');
+        if($(this).prop("checked") == true){
+            $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-featured',
+                data: {featured:'1' ,id:id},
+                success:function(resp){
+                    $('#message-featured').show();
+                    setTimeout(function(){
+                        $('#message-featured').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }else{
+             $.ajax({
+                headers:{
+                   'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                url: '/admin/update-featured',
+                data: {featured:'0' ,id:id},
+                success:function(resp){
+                    $('#message-no-featured').show();
+                    setTimeout(function(){
+                        $('#message-no-featured').fadeOut('slow');
+                    }, 1000)
+                },error:function(){
+                    alert('Error');
+                }
+            })
+        }
+    });
+
       $('.category-status').change(function(){
         var id = $(this).attr('rel');
         if($(this).prop("checked") == true){

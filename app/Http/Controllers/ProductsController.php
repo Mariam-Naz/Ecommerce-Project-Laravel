@@ -117,9 +117,16 @@ class ProductsController extends Controller
         Products::where(['id'=>$data['id']])->update(['status'=>$data['status']]);
     }
 
+    public function updateFeatured(Request $req, $id = null)
+    {
+        $data = $req->all();
+        Products::where(['id' => $data['id']])->update(['featured_product' => $data['featured']]);
+    }
+
     public function products($id=null){
         $productDetails = Products::where(['id'=>$id])->first();
-        return view('maryaaz.product_details')->with(compact('productDetails'));
+        $featuredProducts = Products::where(['featured_product'=>1])->get();
+        return view('maryaaz.product_details')->with(compact('productDetails','featuredProducts'));
     }
 
     public function addAttributes(Request $request,$id=null){
@@ -179,7 +186,7 @@ class ProductsController extends Controller
                     Image::make($file)->save($image_path);
                     $image->image = $filename;
                     $image->product_id = $data['product_id'];
-                    $image->save(); 
+                    $image->save();
                 }
             }
             return redirect('/admin/view-products')->with('attributes-add-success','Images Added Successfully');

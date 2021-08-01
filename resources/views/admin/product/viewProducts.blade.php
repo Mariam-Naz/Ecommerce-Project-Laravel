@@ -49,6 +49,9 @@
         <div id='message_error' style='display:none;' class='alert alert-danger'>
         Status Disabled</div>
         <div id='message_success' style='display:none;' class='alert alert-success'>Status Enabled</div>
+           <div id='message-no-featured' style='display:none;' class='alert alert-danger'>
+        Featured Disabled</div>
+        <div id='message-featured' style='display:none;' class='alert alert-success'>Featured Enabled</div>
                 <div class="panel panel-bd lobidrag">
                 <div class="panel-heading">
                     <div class="btn-group" id="buttonexport">
@@ -130,6 +133,7 @@
                         <th>Price</th>
                         <th>Created at</th>
                         <th>Status</th>
+                        <th>Featured</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -144,12 +148,14 @@
                         @endforeach
                         <td>{{$product->code}}</td>
                         <td>{{$product->color}}</td>
-                        <td><img src="{{asset('uploads/products/'.$product->image)}}"alt={{$product->image}} width="100" height="100"> </td>
+                        <td><img src="{{asset('uploads/products/'.$product->image)}}" alt={{$product->image}} width="100" height="100"> </td>
                         <td>{{$product->description}}</td>
                         <td>{{$product->price}}</td>
                         <td>{{$product->created_at}}</td>
-                        <td><input type='checkbox' rel='{{$product->id}}' class=' product-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->status == 1) checked @endif ></td>
+                        <td><input type='checkbox' rel='{{$product->id}}' class='product-status btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->status == 1) checked @endif ></td>
                         <div id='myElement' hidden class='alert alert-success'>status Enabled</div>
+                         <td><input type='checkbox' rel='{{$product->id}}' class='featured-product btn btn-success' data-toggle="toggle" data-on='Active' data-onstyle='primary' data-offstyle='secondary' @if($product->featured_product == 1) checked @endif ></td>
+                        <div id='featured' hidden class='alert alert-success'>Featured Enabled</div>
                         <td>
                             <a title="Add Images" class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#image{{$product->id}}"><i class="fa fa-image"></i></a>
                             <a title="Add Attributes" class="btn btn-warning btn-sm" data-toggle="modal" href="{{url('/admin/view-product/'.$product->id)}}" data-target="#attribute{{$product->id}}"><i class="fa fa-list"></i></a>
