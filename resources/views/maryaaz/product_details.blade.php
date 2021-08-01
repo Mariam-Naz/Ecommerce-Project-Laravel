@@ -51,7 +51,7 @@
                 <div class="col-xl-7 col-lg-7 col-md-6">
                     <div class="single-product-details">
                         <h2 style="text-transform: capitalize;">{{$productDetails->name}}</h2>
-                        <h5>Rs {{$productDetails->price}}/-</h5>
+                        <h5 class='product-price'>Rs. {{$productDetails->price}}/-</h5>
                             <p>
                                 <h4>Short Description:</h4>
                                 <p>{{$productDetails->description}}</p>
@@ -59,16 +59,12 @@
                                     <li>
                                         <div class="form-group size-st">
                                             <label class="size-label">Size</label>
-                                            <select id="basic" class="selectpicker show-tick form-control">
-									<option value="0">Size</option>
-									<option value="0">S</option>
-									<option value="1">M</option>
-									<option value="1">L</option>
-									<option value="1">XL</option>
-									<option value="1">XXL</option>
-									<option value="1">3XL</option>
-									<option value="1">4XL</option>
-								</select>
+                                            <select id="saleSize" class="selectpicker show-tick form-control">
+									            <option value="0">Size</option>
+                                                @foreach($productDetails->attributes as $sizes)
+                                                <option value="{{$productDetails->id}}-{{$sizes->size}}">{{$sizes->size}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </li>
                                     <li>
@@ -118,7 +114,7 @@
                                     <img src="{{asset('uploads/products/'.$featuredProduct->image)}}" class="img-fluid" alt={{$featuredProduct->image}}>
                                     <div class="mask-icon">
                                         <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="{{url('/products/'.$featuredProduct->id)}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
@@ -127,7 +123,7 @@
                                 </div>
                                 <div class="why-text">
                                     <h4>{{$featuredProduct->name}}</h4>
-                                    <h5>{{$featuredProduct->price}}</h5>
+                                    <h5>Rs. {{$featuredProduct->price}}</h5>
                                 </div>
                             </div>
                         </div>

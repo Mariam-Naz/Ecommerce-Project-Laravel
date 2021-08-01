@@ -193,4 +193,11 @@ class ProductsController extends Controller
         }
         return view('admin.product.viewProducts')->with(compact('productDetails'));
     }
+
+    public function getPrice(Request $req){
+        $data = $req->all();
+        $proArr = explode('-',$data['sizeId']);
+        $proAttr = ProductsAttributes::where(["product_id"=>$proArr[0], 'size'=>$proArr[1]])->first();
+        echo $proAttr->price;
+    }
 }

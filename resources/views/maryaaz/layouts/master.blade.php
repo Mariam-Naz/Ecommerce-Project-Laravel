@@ -9,7 +9,7 @@
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name='csrfToken' content="{{csrf_token()}}">
     <!-- Site Metas -->
     <title>@yield('title')</title>
     <meta name="keywords" content="">
@@ -43,7 +43,7 @@
 @include('maryaaz.layouts.footer')
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
-    
+
     <script src="{{asset('front_assets/js/jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('front_assets/js/popper.min.js')}}"></script>
     <script src="{{asset('front_assets/js/bootstrap.min.js')}}"></script>
@@ -59,6 +59,24 @@
     <script src="{{asset('front_assets/js/form-validator.min.js')}}"></script>
     <script src="{{asset('front_assets/js/contact-form-script.js')}}"></script>
     <script src="{{asset('front_assets/js/custom.js')}}"></script>
+
+    <script>
+        $(document).ready(function(){
+          $('#saleSize').change(function(){
+             var sizeId = $(this).val();
+              $.ajax({
+                  type: 'get',
+                  url: '/get-product-price',
+                  data: {sizeId:sizeId},
+                  success: function(resp){
+                      $('.product-price').html('Rs. '+resp+'/-');
+                  },error: function(){
+                      alert("Error");
+                  }
+              })
+          })
+        })
+    </script>
 </body>
 
 </html>
